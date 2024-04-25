@@ -14,6 +14,8 @@ const getAllBooks = (req, res) => {
 const getBookById = (req, res) => {
   fs.readFile(filePath, "utf8", (err, data) => {
     const books = JSON.parse(data);
+    // Ici j'utilise la méthode find() pour trouver le livre avec l'ID spécifique
+    // il renvoie le premier élément qui correspond au critère
     const book = books.livres.find((el) => el.id === parseInt(req.params.id));
     res.json(book);
   });
@@ -29,7 +31,10 @@ const addBook = (req, res) => {
 const getBooksByAuthor = (req, res) => {
   fs.readFile(filePath, "utf8", (err, data) => {
     const books = JSON.parse(data);
+
+    // On utilise la méthode filter() pour trouver tous les livres par auteur
     const booksByAuthor = books.livres.filter(
+      // tolowerCase c'est pour que ca soit insensible à la casse
       (el) => el.auteur.toLowerCase() === req.params.auteur.toLowerCase()
     );
     res.json(booksByAuthor);
